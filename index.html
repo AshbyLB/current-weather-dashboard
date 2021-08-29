@@ -22,7 +22,7 @@
                     <h2 class="card-header">Search for a city:</h2>
                     <div class="card-body">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="City" aria-label="Recipient's username"
+                            <input type="text" class="form-control" id="cityInput" placeholder="City" aria-label="Recipient's username"
                                 aria-describedby="button-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-dark" type="button" id="button-addon2">Search</button>
@@ -38,11 +38,11 @@
             <div class="col-md-8">
                 <div class="card bg-success mb-4">
                     <h3 class="card-header text-center" id="forecast">Currently:</h3>
-                    <img src="" alt="">
-                    <P>Temp:</P>
-                    <P>Wind:</P>
-                    <P>Himidity:</P>
-                    <P>UV Index:</P>
+                    <h2 id= currentCity></h2>
+                    <P id="currentTemp"></P>
+                    <P id="currentWind"></P>
+                    <P id="currenthumidity"></P>
+                    <P id="currentUv"></P>
                 </div>
                 <div>
                     <div class="card text-dark bg-success">
