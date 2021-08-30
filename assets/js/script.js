@@ -7,13 +7,7 @@ var currentWind = document.getElementById("currentWind");
 var searchButton = document.getElementById("button-addon2");
 var cityEl = document.getElementById("cityInput");
 var currentCity = document.getElementById("currentCity");
-
-
-
-
-
-
-
+var cityIcon = document.querySelector('.weather-icon');
 
 
 searchButton.addEventListener("click", function () {
@@ -24,11 +18,11 @@ searchButton.addEventListener("click", function () {
             return response.json();
         })
         .then(function (data) {
-           
+            var tranTemp = Math.floor(((data.main.temp - 273.15) * 9/5) + 32);
             currentCity.textContent = data.name;
-            currentTemp.textContent = "Temp: " + data.main.temp;
+            currentTemp.textContent = "Temp: " + tranTemp;
+            currentWind.textContent = "Wind: " + data.wind.speed;
             currentHumidity.textContent = "Humidity: " + data.main.humidity;
-            currentWind.textContent = "Wind Speed: " + data.wind.speed;
-            currentUv.textContent = "UVI: " + data.current.uvi;
+            
         })
 });
