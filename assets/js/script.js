@@ -18,11 +18,29 @@ searchButton.addEventListener("click", function () {
             return response.json();
         })
         .then(function (data) {
-            var tranTemp = Math.floor(((data.main.temp - 273.15) * 9/5) + 32);
+
+            console.log("data", data);
+            var tranTemp = Math.floor(((data.main.temp - 273.15) * 9 / 5) + 32);
             currentCity.textContent = data.name;
             currentTemp.textContent = "Temp: " + tranTemp;
             currentWind.textContent = "Wind: " + data.wind.speed;
             currentHumidity.textContent = "Humidity: " + data.main.humidity;
-            
+
+            var uvLat = data.coord.lat;
+            var uvLon = data.coord.lon;
+
+            var getUvi = "https:api.openweathermap.org/data/2.5/onecall?lat=" + uvLat + "&lon=" + uvLon + "&appid=" + apiKey;
+
+            fetch(getUvi)
+                .then(function (response) {
+                    return response.json();
+                    
+                })
+                .then(function (uvData) {
+                    console.log(uvData);
+                    currentUv.textContent = "UVI: " + uvData.current.uvi;
+                })
+
         })
+
 });
