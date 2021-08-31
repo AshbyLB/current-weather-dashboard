@@ -11,10 +11,10 @@ var obj = {};
 
 
 if (localStorage.getItem("recentCity")
-){
+) {
     recentCities = [localStorage.getItem("recentCity")];
     console.log(recentCities);
-}else {
+} else {
     recentCities = [];
 }
 
@@ -45,13 +45,14 @@ searchButton.addEventListener("click", function () {
 
             var cityIcon = document.createElement("img");
             cityIcon.alt = data.weather[0].icon;
-            cityIcon.src="http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
+            cityIcon.src = "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
             currentCity.appendChild(cityIcon);
 
             var uvLat = data.coord.lat;
             var uvLon = data.coord.lon;
 
             var getUvi = "https:api.openweathermap.org/data/2.5/onecall?lat=" + uvLat + "&lon=" + uvLon + "&appid=" + apiKey;
+            console.log(getUvi);
 
             fetch(getUvi)
                 .then(function (response) {
@@ -62,7 +63,13 @@ searchButton.addEventListener("click", function () {
                     console.log(uvData);
                     currentUv.textContent = "UVI: " + uvData.current.uvi;
                 })
+            
+
+
+
+            
 
         })
 
 });
+
