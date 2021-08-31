@@ -1,5 +1,4 @@
 var apiKey = "7a1b1735c614d0057d9ac28220d05d40";
-var searchedCity = "Charlotte";
 var currentTemp = document.getElementById("currentTemp");
 var currentHumidity = document.getElementById("currentHumidity");
 var currentUv = document.getElementById("currentUv");
@@ -7,24 +6,47 @@ var currentWind = document.getElementById("currentWind");
 var searchButton = document.getElementById("button-addon2");
 var cityEl = document.getElementById("cityInput");
 var currentCity = document.getElementById("currentCity");
-var cityIcon = document.querySelector('.weather-icon');
+var recentCities;
+var obj = {};
 
+
+if (localStorage.getItem("recentCity")
+){
+    recentCities = [localStorage.getItem("recentCity")];
+    console.log(recentCities);
+}else {
+    recentCities = [];
+}
 
 searchButton.addEventListener("click", function () {
-    var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + searchedCity + "&appid=" + apiKey;
+    var searchedCity = cityEl.value;
+    console.log(cityEl.value);
+    recentCities.push(obj.name = cityEl.value);
 
+
+    var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + searchedCity + "&appid=" + apiKey;
+    localStorage.setItem("recentCity", JSON.stringify(recentCities));
+    console.log(JSON.parse(localStorage.getItem("recentCity")));
+    for (var i = 0; i < JSON.parse(localStorage.getItem("recentCity")).length; i++) {
+        console.log(JSON.parse(localStorage.getItem("recentCity"))[i]);
+    }
     fetch(requestUrl)
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
 
-            console.log("data", data);
+            console.log(data);
             var tranTemp = Math.floor(((data.main.temp - 273.15) * 9 / 5) + 32);
             currentCity.textContent = data.name;
             currentTemp.textContent = "Temp: " + tranTemp;
             currentWind.textContent = "Wind: " + data.wind.speed;
             currentHumidity.textContent = "Humidity: " + data.main.humidity;
+
+            var cityIcon = document.createElement("img");
+            cityIcon.alt = data.weather[0].icon;
+            cityIcon.src="http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
+            currentCity.appendChild(cityIcon);
 
             var uvLat = data.coord.lat;
             var uvLon = data.coord.lon;
@@ -34,7 +56,7 @@ searchButton.addEventListener("click", function () {
             fetch(getUvi)
                 .then(function (response) {
                     return response.json();
-                    
+
                 })
                 .then(function (uvData) {
                     console.log(uvData);
