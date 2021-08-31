@@ -12,31 +12,39 @@ var obj = {};
 
 if (localStorage.getItem("recentCity")
 ) {
-    recentCities = [localStorage.getItem("recentCity")];
-    console.log(recentCities);
+    console.log(localStorage.getItem("recentCity"))
+    recentCities = localStorage.getItem("recentCity").split(",");
+    //console.log(recentCities);
 } else {
     recentCities = [];
 }
 
 searchButton.addEventListener("click", function () {
     var searchedCity = cityEl.value;
-    console.log(cityEl.value);
-    recentCities.push(obj.name = cityEl.value);
+    //console.log(cityEl.value);
+    //console.log(obj.value);
+    if(!recentCities.includes(cityEl.value)){
+        recentCities.push(cityEl.value)
+    }
 
 
     var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + searchedCity + "&appid=" + apiKey;
-    localStorage.setItem("recentCity", JSON.stringify(recentCities));
-    console.log(JSON.parse(localStorage.getItem("recentCity")));
-    for (var i = 0; i < JSON.parse(localStorage.getItem("recentCity")).length; i++) {
-        console.log(JSON.parse(localStorage.getItem("recentCity"))[i]);
-    }
+    //console.log(requestUrl);
+    //var stringified = JSON.stringify(recentCities);
+    //console.log(recentCities,stringified);
+    localStorage.setItem("recentCity", recentCities.join(","));
+    //console.log(recentCities);
+    
+    //for (var i = 0; i < localStorage.getItem("recentCity").split(",").length; i++) {
+        //console.log(JSON.parse(localStorage.getItem("recentCity"))[i]);
+    //}
     fetch(requestUrl)
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
 
-            console.log(data);
+            //console.log(data);
             var tranTemp = Math.floor(((data.main.temp - 273.15) * 9 / 5) + 32);
             currentCity.textContent = data.name;
             currentTemp.textContent = "Temp: " + tranTemp;
@@ -48,11 +56,14 @@ searchButton.addEventListener("click", function () {
             cityIcon.src = "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
             currentCity.appendChild(cityIcon);
 
+            
+
+
             var uvLat = data.coord.lat;
             var uvLon = data.coord.lon;
 
-            var getUvi = "https:api.openweathermap.org/data/2.5/onecall?lat=" + uvLat + "&lon=" + uvLon + "&appid=" + apiKey;
-            console.log(getUvi);
+            var getUvi = "https:api.openweathermap.org/data/2.5/onecall?lat=" + uvLat + "&lon=" + uvLon + "&appid=" + apiKey + "&units=imperial";
+            //console.log(getUvi);
 
             fetch(getUvi)
                 .then(function (response) {
@@ -60,11 +71,13 @@ searchButton.addEventListener("click", function () {
 
                 })
                 .then(function (uvData) {
-                    console.log(uvData);
+                    //console.log(uvData);
                     currentUv.textContent = "UVI: " + uvData.current.uvi;
                 })
             
+                for (var day of DailyData) {
 
+                }
 
 
             
