@@ -5,3 +5,25 @@ ul li {
 .prevCity {
     background-color: rgb(255, 195, 127);
 }
+
+.good {
+    background-color: rgb(117, 255, 152);
+    color: white;
+    font-size: 10px;
+    border-radius: 4px;
+
+}
+
+.mild {
+    background-color: rgb(238, 252, 54);
+    color: white;
+    font-size: 4px;
+    border-radius: 10px;
+}
+
+.warning {
+    background-color: rgb(255, 0, 0);
+    color: white;
+    font-size: 4px;
+    border-radius: 10px;
+}

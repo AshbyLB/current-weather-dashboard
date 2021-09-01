@@ -15,6 +15,8 @@ var weatherIcon = document.querySelectorAll(".weatherIcon");
 var searchEl = document.getElementById("searchList");
 
 
+
+
 if (localStorage.getItem("recentCity")
 ) {
     recentCities = localStorage.getItem("recentCity").split(",");
@@ -73,13 +75,13 @@ searchButton.addEventListener("click", function () {
 
             var cityIcon = document.createElement("img");
             cityIcon.alt = data.weather[0].icon;
-            cityIcon.src = "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
+            cityIcon.src = "https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
             currentCity.appendChild(cityIcon);
 
             var uvLat = data.coord.lat;
             var uvLon = data.coord.lon;
 
-            var getUvi = "https:api.openweathermap.org/data/2.5/onecall?lat=" + uvLat + "&lon=" + uvLon + "&appid=" + apiKey + "&units=imperial";
+            var getUvi = "https://api.openweathermap.org/data/2.5/onecall?lat=" + uvLat + "&lon=" + uvLon + "&appid=" + apiKey + "&units=imperial";
 
             console.log(getUvi);
 
@@ -89,7 +91,20 @@ searchButton.addEventListener("click", function () {
 
                 })
                 .then(function (uvData) {
-                    currentUv.textContent = "UVI: " + uvData.current.uvi;
+                    
+                    var uvNum = uvData.current.uvi;
+                    
+                    currentUv.textContent = "UVI: " + uvNum;
+
+                    if (uvNum <= 2) {
+                        currentUv.classList = "good";
+                    }
+                    else if (uvNum > 2 && uvNum <= 8) {
+                        currentUv.classList = "mild";
+                    }
+                    else {
+                        currentUv.classList = "warning";
+                    }
 
                     for (var i = 0; i < 5; i++) {
                         var day = uvData.daily[i]
@@ -139,13 +154,13 @@ searchEl.addEventListener("click", function (event) {
 
             var cityIcon = document.createElement("img");
             cityIcon.alt = data.weather[0].icon;
-            cityIcon.src = "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
+            cityIcon.src = "https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
             currentCity.appendChild(cityIcon);
 
             var uvLat = data.coord.lat;
             var uvLon = data.coord.lon;
 
-            var getUvi = "https:api.openweathermap.org/data/2.5/onecall?lat=" + uvLat + "&lon=" + uvLon + "&appid=" + apiKey + "&units=imperial";
+            var getUvi = "https://api.openweathermap.org/data/2.5/onecall?lat=" + uvLat + "&lon=" + uvLon + "&appid=" + apiKey + "&units=imperial";
 
             console.log(getUvi);
 
@@ -172,5 +187,5 @@ searchEl.addEventListener("click", function (event) {
                     }
                 })
         })
-})
+});
 
