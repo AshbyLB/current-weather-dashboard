@@ -17,7 +17,7 @@ Type the name of the city into the input field to the left and hit the search bu
 ## Screenshot
  
 
-![Quiz Screenshot]()
+![Dashboard Screenshot](./assets/img/weather.png)
 
 ## Languages
 Html and JavaScript
