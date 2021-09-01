@@ -28,6 +28,7 @@ for (var i = 0; i < recentCities.length; i++) {
     var recentEl = document.createElement("li");
     var cityBtn = document.createElement("button");
     cityBtn.classList.add("prevCity");
+    //cityBtn.textContent = searchedCity;
     cityBtn.textContent = recentCities[i];
     recentEl.appendChild(cityBtn);
     searchEl.appendChild(recentEl);
