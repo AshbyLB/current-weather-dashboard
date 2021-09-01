@@ -81,7 +81,7 @@ searchButton.addEventListener("click", function () {
             var uvLat = data.coord.lat;
             var uvLon = data.coord.lon;
 
-            var getUvi = "https://api.openweathermap.org/data/2.5/onecall?lat=" + uvLat + "&lon=" + uvLon + "&appid=" + apiKey + "&units=imperial";
+            var getUvi = "https:api.openweathermap.org/data/2.5/onecall?lat=" + uvLat + "&lon=" + uvLon + "&appid=" + apiKey + "&units=imperial";
 
             console.log(getUvi);
 
