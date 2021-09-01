@@ -28,7 +28,6 @@ for (var i = 0; i < recentCities.length; i++) {
     var recentEl = document.createElement("li");
     var cityBtn = document.createElement("button");
     cityBtn.classList.add("prevCity");
-    //cityBtn.textContent = searchedCity;
     cityBtn.textContent = recentCities[i];
     recentEl.appendChild(cityBtn);
     searchEl.appendChild(recentEl);
@@ -43,7 +42,6 @@ searchButton.addEventListener("click", function () {
         var recentEl = document.createElement("li");
         var cityBtn = document.createElement("button");
         cityBtn.classList.add("prevCity");
-        //cityBtn.textContent = searchedCity;
         cityBtn.textContent = recentCities[recentCities.length -1];
         recentEl.appendChild(cityBtn);
         searchEl.appendChild(recentEl);
@@ -119,16 +117,7 @@ searchEl.addEventListener("click", function (event) {
 
     var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + searchedCity + "&appid=" + apiKey;
 
-    /*var recentEl = document.createElement("li");
-    var cityBtn = document.createElement("button");
-    cityBtn.classList.add("prevCity");
-    cityBtn.textContent = searchedCity;
-    recentEl.appendChild(cityBtn);
-    searchEl.appendChild(recentEl);*/
-
-
     localStorage.setItem("recentCity", recentCities.join(","));
-
 
     fetch(requestUrl)
         .then(function (response) {

@@ -1,3 +1,7 @@
 ul li {
     list-style: none;
 }
+
+.prevCity {
+    background-color: rgb(255, 195, 127);
+}
