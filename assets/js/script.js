@@ -23,21 +23,33 @@ if (localStorage.getItem("recentCity")
     recentCities = [];
 }
 
+
+for (var i = 0; i < recentCities.length; i++) {
+    var recentEl = document.createElement("li");
+    var cityBtn = document.createElement("button");
+    cityBtn.classList.add("prevCity");
+    //cityBtn.textContent = searchedCity;
+    cityBtn.textContent = recentCities[i];
+    recentEl.appendChild(cityBtn);
+    searchEl.appendChild(recentEl);
+}
+
 searchButton.addEventListener("click", function () {
 
     var searchedCity = cityEl.value;
     if (!recentCities.includes(cityEl.value)) {
         recentCities.push(cityEl.value)
+    
+        var recentEl = document.createElement("li");
+        var cityBtn = document.createElement("button");
+        cityBtn.classList.add("prevCity");
+        //cityBtn.textContent = searchedCity;
+        cityBtn.textContent = recentCities[recentCities.length -1];
+        recentEl.appendChild(cityBtn);
+        searchEl.appendChild(recentEl);
     }
-
+    
     var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + searchedCity + "&appid=" + apiKey;
-
-    var recentEl = document.createElement("li");
-    var cityBtn = document.createElement("button");
-    cityBtn.classList.add("prevCity");
-    cityBtn.textContent = searchedCity;
-    recentEl.appendChild(cityBtn);
-    searchEl.appendChild(recentEl);
 
 
     localStorage.setItem("recentCity", recentCities.join(","));
@@ -98,7 +110,77 @@ searchButton.addEventListener("click", function () {
 
 });
 
-searchEl.addEventListener("click", function(event){
+searchEl.addEventListener("click", function (event) {
     console.log(event.target.innerText);
+    var searchedCity = event.target.innerText;
+    if (!recentCities.includes(cityEl.value)) {
+        recentCities.push(cityEl.value)
+    }
+
+    var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + searchedCity + "&appid=" + apiKey;
+
+    /*var recentEl = document.createElement("li");
+    var cityBtn = document.createElement("button");
+    cityBtn.classList.add("prevCity");
+    cityBtn.textContent = searchedCity;
+    recentEl.appendChild(cityBtn);
+    searchEl.appendChild(recentEl);*/
+
+
+    localStorage.setItem("recentCity", recentCities.join(","));
+
+
+    fetch(requestUrl)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+
+            var forDate = new Date(data.dt * 1000);
+            var forMonth = forDate.getMonth() + 1;
+            var forDay = forDate.getDate();
+            var forYear = forDate.getFullYear();
+
+            var tranTemp = Math.floor(((data.main.temp - 273.15) * 9 / 5) + 32);
+            currentCity.textContent = data.name + " " + forMonth + "/" + forDay + "/" + forYear;
+            currentTemp.textContent = "Temp: " + tranTemp;
+            currentWind.textContent = "Wind: " + data.wind.speed;
+            currentHumidity.textContent = "Humidity: " + data.main.humidity;
+
+            var cityIcon = document.createElement("img");
+            cityIcon.alt = data.weather[0].icon;
+            cityIcon.src = "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
+            currentCity.appendChild(cityIcon);
+
+            var uvLat = data.coord.lat;
+            var uvLon = data.coord.lon;
+
+            var getUvi = "https:api.openweathermap.org/data/2.5/onecall?lat=" + uvLat + "&lon=" + uvLon + "&appid=" + apiKey + "&units=imperial";
+
+            console.log(getUvi);
+
+            fetch(getUvi)
+                .then(function (response) {
+                    return response.json();
+
+                })
+                .then(function (uvData) {
+                    currentUv.textContent = "UVI: " + uvData.current.uvi;
+
+                    for (var i = 0; i < 5; i++) {
+                        var day = uvData.daily[i]
+                        var fiveDate = new Date(day.dt * 1000);
+                        var fiveMonth = fiveDate.getMonth() + 1;
+                        var fiveDay = fiveDate.getDate();
+                        var fiveYear = fiveDate.getFullYear();
+                        console.log(day);
+
+                        temp[i].textContent = "Temp: " + day.temp.day;
+                        wind[i].textContent = "Wind Speed: " + day.wind_speed;
+                        humid[i].textContent = "Humidity: " + day.humidity;
+                        dayEl[i].textContent = fiveMonth + "/" + fiveDay + "/" + fiveYear;
+                    }
+                })
+        })
 })
 
