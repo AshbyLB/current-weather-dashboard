@@ -81,9 +81,7 @@ searchButton.addEventListener("click", function () {
             var uvLat = data.coord.lat;
             var uvLon = data.coord.lon;
 
-            var getUvi = "https:api.openweathermap.org/data/2.5/onecall?lat=" + uvLat + "&lon=" + uvLon + "&appid=" + apiKey + "&units=imperial";
-
-            console.log(getUvi);
+            var getUvi = "https://api.openweathermap.org/data/2.5/onecall?lat=" + uvLat + "&lon=" + uvLon + "&appid=" + apiKey + "&units=imperial";
 
             fetch(getUvi)
                 .then(function (response) {
@@ -125,7 +123,7 @@ searchButton.addEventListener("click", function () {
 });
 
 searchEl.addEventListener("click", function (event) {
-    console.log(event.target.innerText);
+
     var searchedCity = event.target.innerText;
     if (!recentCities.includes(cityEl.value)) {
         recentCities.push(cityEl.value)
@@ -162,7 +160,6 @@ searchEl.addEventListener("click", function (event) {
 
             var getUvi = "https://api.openweathermap.org/data/2.5/onecall?lat=" + uvLat + "&lon=" + uvLon + "&appid=" + apiKey + "&units=imperial";
 
-            console.log(getUvi);
 
             fetch(getUvi)
                 .then(function (response) {
@@ -178,7 +175,6 @@ searchEl.addEventListener("click", function (event) {
                         var fiveMonth = fiveDate.getMonth() + 1;
                         var fiveDay = fiveDate.getDate();
                         var fiveYear = fiveDate.getFullYear();
-                        console.log(day);
 
                         temp[i].textContent = "Temp: " + day.temp.day;
                         wind[i].textContent = "Wind Speed: " + day.wind_speed;
